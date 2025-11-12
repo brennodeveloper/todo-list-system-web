@@ -1,0 +1,88 @@
+/* Estilos Gerais (Cor de Fundo Escura) */
+.login-body {
+    display: flex;
+    font-family: "Rubik", sans-serif;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f6f6f6;
+}
+
+.card-login {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 380px; 
+    text-align: center;
+}
+
+/* Títulos e Subtítulos */
+.card-login h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #333;
+}
+.card-login p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Campos de Input */
+.form-login input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+    font-size: 16px;
+}
+
+/* Botão Primário (Login) */
+.btn-primary {
+    background-color: #6c5ce7; /* Cor azul do botão primário na imagem */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+.btn-primary:hover {
+    background-color: #5b48e4;
+}
+
+/* Estilo para o link de Registro */
+.register-link-text {
+    font-size: 14px;
+    color: #666;
+    margin-top: 25px; /* Espaçamento da parte de baixo do formulário */
+}
+
+.register-link-text a {
+    color: #007bff; /* Cor azul do botão primário ou um tom semelhante */
+    text-decoration: none; /* Remove sublinhado padrão */
+    font-weight: bold;
+}
+
+.register-link-text a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para Mensagens de Sucesso */
+.alert-success {
+    background-color: #d4edda; /* Fundo verde claro */
+    color: #155724; /* Texto verde escuro */
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: left;
+}

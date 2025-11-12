@@ -1,0 +1,71 @@
+header {
+  background-color: #6c5ce7;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.todo-card {
+  background-color: var(--card-color, #fff);
+  color: #fff;
+  width: 250px;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.todo-card:hover {
+  transform: translateY(-5px);
+}
+
+.todo-card h2 {
+  margin: 0 0 0.5rem;
+}
+
+.todo-card p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.tasks {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.tasks li {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.4rem;
+  border-radius: 5px;
+  margin-bottom: 0.4rem;
+}
+
+.card-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dfe6e9;
+  color: #2d3436;
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.add-card:hover {
+  background-color: #b2bec3;
+}
