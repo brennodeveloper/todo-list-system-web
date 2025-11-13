@@ -1,0 +1,142 @@
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* ===== Container principal ===== */
+.todo-container {
+    width: 90%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+    padding: 20px;
+    padding-bottom: 25px;
+}
+
+/* ===== Header ===== */
+.todo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.todo-header h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2em;
+    font-weight: normal;
+    color: #333;
+    margin: 0;
+    margin-right: 15px;
+}
+
+.item-count {
+    font-size: 0.9em;
+    background-color: #eee;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #555;
+    flex-shrink: 0;
+}
+
+.delete-all-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #888;
+    cursor: pointer;
+    margin-left: auto;
+    padding: 5px;
+}
+
+.delete-all-btn:hover {
+    color: #e74c3c;
+}
+
+.header-divider {
+    border: none;
+    border-top: 1px dashed #ddd;
+    margin: 15px 0;
+}
+
+/* ===== Área da Lista ===== */
+.todo-list-area {
+    min-height: 200px;
+    padding: 10px 0;
+}
+
+.empty-list-message {
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    color: #aaa;
+    margin-left: 5px;
+    font-size: 1.1em;
+}
+
+/* ===== Divisor do Input ===== */
+.input-divider {
+    border: none;
+    border-top: 2px dashed #ddd;
+    margin: 20px 0 15px 0;
+    opacity: 0.7;
+}
+
+/* ===== Seção de Adicionar Item ===== */
+.add-item-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.new-item-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    font-size: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    color: #000000;
+}
+
+.new-item-input:focus {
+    outline: none;
+}
+
+.add-item-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    color: white;
+    background-color: red;
+    background-image: linear-gradient(to top, red, red);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: 
+        background-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.add-item-btn:hover {
+    background-color: #f57e8d;
+    background-image: linear-gradient(to top, #f26b7b, #f57e8d);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-3px);
+}
