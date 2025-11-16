@@ -1,71 +1,101 @@
-header {
-  background-color: #6c5ce7;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
+body {
+    background: #f7faff;
+}
+
+/* TOP BAR */
+.top-bar {
+    width: 100%;
+    padding: 10px 20px;
+    background: #1a1a1a;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar .logout {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* TITLE */
+.title {
+    margin: 25px;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+/* CARDS GRID */
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding: 0 25px 40px 25px;
 }
 
-.todo-card {
-  background-color: var(--card-color, #fff);
-  color: #fff;
-  width: 250px;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    min-height: 230px;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+    transition: 0.2s;
+    cursor: pointer;
 }
 
-.todo-card:hover {
-  transform: translateY(-5px);
+.card:hover {
+    transform: scale(1.035);
 }
 
-.todo-card h2 {
-  margin: 0 0 0.5rem;
+.card h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
 }
 
-.todo-card p {
-  font-size: 0.9rem;
-  opacity: 0.9;
+.card p {
+    font-size: 13px;
+    margin-bottom: 15px;
 }
 
-.tasks {
-  list-style: none;
-  padding: 0;
-  margin-top: 1rem;
+.card ul {
+    list-style: none;
 }
 
-.tasks li {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.4rem;
-  border-radius: 5px;
-  margin-bottom: 0.4rem;
+.card li {
+    margin-bottom: 8px;
+    font-size: 14px;
 }
 
-.card-actions {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
+.card li.indent {
+    margin-left: 20px;
 }
 
+.yellow { background: #ffeeb5; }
+.blue   { background: #bfe1ff; }
+.pink   { background: #ffc8c8; }
+.green  { background: #c6f7d1; }
+.purple { background: #c9a0dc; }
+
+/* ADD CARD */
 .add-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #dfe6e9;
-  color: #2d3436;
-  font-size: 3rem;
-  cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #d9dde3;
+    font-size: 60px;
+    color: #555;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .add-card:hover {
-  background-color: #b2bec3;
+    transform: scale(1.05);
 }
