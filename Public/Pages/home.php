@@ -77,7 +77,9 @@
         </ul>
     </div>
 
-    <div class="card add-card" id="btnAddCard"><span>+</span></div>
+<div class="card add-card" id="btnAddCard">
+    <span>+</span>
+</div>
 
 </section>
 
@@ -93,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<script src="../Public/JS/home.js"></script>
+<script src="../Assets/JS/home.js"></script>
 
 </body>
 </html>

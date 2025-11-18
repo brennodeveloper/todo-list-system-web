@@ -36,5 +36,6 @@
         </section>
     </div>
 
+<script src="../Assets/JS/home.js"></script>
 </body>
 </html>
