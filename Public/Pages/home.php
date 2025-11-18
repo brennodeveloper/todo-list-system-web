@@ -17,7 +17,6 @@
 
 <section class="cards-container">
 
-    <!-- CARD 1 -->
     <div class="card yellow">
         <button class="delete-btn" data-delete aria-label="Excluir card">🗑️</button>
         <h2>To-do List 1</h2>
@@ -30,7 +29,6 @@
         </ul>
     </div>
 
-    <!-- CARD 2 -->
     <div class="card blue">
         <button class="delete-btn" data-delete aria-label="Excluir card">🗑️</button>
         <h2>To-do List 2</h2>
@@ -43,7 +41,6 @@
         </ul>
     </div>
 
-    <!-- CARD 3 -->
     <div class="card pink">
         <button class="delete-btn" data-delete aria-label="Excluir card">🗑️</button>
         <h2>To-do List 3</h2>
@@ -56,7 +53,6 @@
         </ul>
     </div>
 
-    <!-- CARD 4 -->
     <div class="card green">
         <button class="delete-btn" data-delete aria-label="Excluir card">🗑️</button>
         <h2>To-do List 4</h2>
@@ -69,7 +65,6 @@
         </ul>
     </div>
 
-    <!-- CARD 5 -->
     <div class="card purple">
         <button class="delete-btn" data-delete aria-label="Excluir card">🗑️</button>
         <h2>To-do List 5</h2>
@@ -82,13 +77,12 @@
         </ul>
     </div>
 
-    <!-- BOTÃO DE ADICIONAR CARD -->
     <div class="card add-card" id="btnAddCard"><span>+</span></div>
 
 </section>
 
 <script>
-// Remove card ao clicar na lixeira
+// Remove card ao clicar no botão Excluir
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('[data-delete]').forEach(btn => {
         btn.addEventListener('click', function() {

@@ -2,67 +2,78 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Inter", sans-serif;
 }
 
 body {
-    background: #f7faff;
+    background: linear-gradient(135deg, #eef2f7, #d9e2ec);
+    padding-bottom: 50px;
 }
 
-/* TOP BAR */
 .top-bar {
     width: 100%;
-    padding: 10px 20px;
-    background: #1a1a1a;
-    color: white;
+    padding: 12px 30px;
+    background: rgba(15, 23, 42, 0.9);
+    color: #f8fafc;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    backdrop-filter: blur(8px);
 }
 
 .top-bar .logout {
-    color: white;
+    color: #e2e8f0;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
+    transition: 0.2s;
 }
 
-/* TITLE */
+.top-bar .logout:hover {
+    color: white;
+}
+
 .title {
-    margin: 25px;
-    font-size: 28px;
-    font-weight: 500;
+    margin: 35px 30px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #1e293b;
 }
 
-/* CARDS GRID */
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-    padding: 0 25px 40px 25px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 0 30px;
 }
 
 .card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    min-height: 230px;
-    box-shadow: 0 3px 7px rgba(0,0,0,0.1);
-    transition: 0.2s;
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 16px;
+    padding: 25px;
+    min-height: 240px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    backdrop-filter: blur(10px);
+    transition: 0.25s;
+    position: relative;
     cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.4);
 }
 
 .card:hover {
-    transform: scale(1.035);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
 .card h2 {
-    font-size: 20px;
+    font-size: 22px;
     margin-bottom: 8px;
+    color: #0f172a;
 }
 
 .card p {
-    font-size: 13px;
+    font-size: 14px;
     margin-bottom: 15px;
+    color: #334155;
 }
 
 .card ul {
@@ -70,52 +81,60 @@ body {
 }
 
 .card li {
-    margin-bottom: 8px;
+    margin-bottom: 7px;
     font-size: 14px;
+    color: #475569;
 }
 
 .card li.indent {
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
-.yellow { background: #ffeeb5; }
-.blue   { background: #bfe1ff; }
-.pink   { background: #ffc8c8; }
-.green  { background: #c6f7d1; }
-.purple { background: #c9a0dc; }
+.yellow { background: linear-gradient(135deg, #fff5bf, #ffe79a); }
+.blue   { background: linear-gradient(135deg, #cae6ff, #a8d4ff); }
+.pink   { background: linear-gradient(135deg, #ffd0db, #ffb8c7); }
+.green  { background: linear-gradient(135deg, #d1f7e2, #b8efcf); }
+.purple { background: linear-gradient(135deg, #e2c8ff, #d4b4ff); }
 
-/* ADD CARD */
 .add-card {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #d9dde3;
+    background: rgba(148,163,184,0.25);
+    border: 2px dashed #94a3b8;
+    border-radius: 16px;
     font-size: 60px;
-    color: #555;
-    cursor: pointer;
-    transition: 0.2s;
+    color: #475569;
+    transition: .25s;
+    backdrop-filter: blur(6px);
 }
 
 .add-card:hover {
-    transform: scale(1.05);
+    background: rgba(148,163,184,0.35);
+    transform: translateY(-4px);
+    border-color: #64748b;
 }
 
 .delete-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #fff;  /* fundo branco para ficar visível */
-    border: 1px solid #ccc; /* borda leve */
-    border-radius: 4px;
-    padding: 5px;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
     cursor: pointer;
-    font-size: 18px;
-    color: #333;
-    transition: all 0.2s;
+    font-size: 16px;
+    color: #1e293b;
+    transition: 0.25s;
+    display: none;
+}
+
+.card:hover .delete-btn {
+    display: block;
 }
 
 .delete-btn:hover {
-    background: red;
+    background: #ef4444;
     color: white;
-    border-color: red;
 }
