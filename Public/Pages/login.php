@@ -36,8 +36,8 @@ if (isset($_GET['error'])) {
             <?php if (!empty($error_message)): ?>
                 <div class="alert-error"><?php echo htmlspecialchars($error_message); ?></div>
             <?php endif; ?>
-            <h1>Login to your account</h1>
-            <p>Choose one of the option to go</p>
+            <h1>Login</h1>
+            <p>Escolha uma das opções para ir</p>
 
             <form action="../actions.php" method="POST" class="form-login">
                 <input type="hidden" name="action_type" value="login">

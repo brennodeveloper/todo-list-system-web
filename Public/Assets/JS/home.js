@@ -10,41 +10,27 @@ document.addEventListener("DOMContentLoaded", () => {
   let modalContainer = null;
 
   // --- 3. Funções de Inicialização ---
-
-  /**
-   * Função principal: Inicia o setup do modal e carrega as listas.
-   */
   function initialize() {
     setupModalShell();
     loadLists();
     setupModalOpeners();
   }
 
-  /**
-   * Carrega as listas do banco de dados e as exibe na tela.
-   */
   async function loadLists() {
     try {
-      // Usa o caminho relativo correto (de Pages/ para Public/)
       const response = await fetch("../actions.php?action=list_get");
-
-      if (!response.ok) {
-        throw new Error("Falha ao buscar listas: " + response.statusText);
-      }
+      if (!response.ok) throw new Error("Falha ao buscar listas: " + response.statusText);
 
       const lists = await response.json();
 
-      // Limpa os cards estáticos (exceto o botão "+")
-      cardsContainer.innerHTML = "";
-
-      // Adiciona cada lista vinda do banco
+      // Limpa o container antes de recarregar
+      cardsContainer.innerHTML = ""; 
       lists.forEach((list) => {
         const card = createListCard(list);
         cardsContainer.appendChild(card);
       });
-
-      // Recoloca o botão "+" no final
-      cardsContainer.appendChild(addCardButton);
+      // Garante que o botão de adicionar fique sempre por último
+      cardsContainer.appendChild(addCardButton); 
     } catch (error) {
       console.error(error);
       cardsContainer.innerHTML = "<p>Erro ao carregar as listas.</p>";
@@ -52,99 +38,69 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /**
-   * Cria e injeta o "shell" do modal (fundo e contêiner) no DOM.
-   */
   function setupModalShell() {
-    // Cria o fundo escuro
+    // Cria o fundo escuro (backdrop)
     modalBackdrop = document.createElement("div");
     modalBackdrop.className = "modal-backdrop";
 
-    // Cria o contêiner central
+    // Cria o container do modal
     modalContainer = document.createElement("div");
     modalContainer.className = "modal-container";
 
-    // Adiciona ao body
     document.body.appendChild(modalBackdrop);
     document.body.appendChild(modalContainer);
   }
 
-  /**
-   * Adiciona os "escutadores" de eventos para abrir e fechar o modal.
-   */
   function setupModalOpeners() {
-    // Abrir: Clicar no botão "+"
     addCardButton.addEventListener("click", openCreateModal);
-
-    // Fechar: Clicar no fundo escuro
-    modalBackdrop.addEventListener("click", closeModal);
+    // Permite fechar o modal clicando no fundo (backdrop)
+    modalBackdrop.addEventListener("click", closeModal); 
   }
 
   // --- 4. Funções de Lógica do Modal ---
-
-  /**
-   * Busca o HTML do create.php e o exibe no modal.
-   */
   async function openCreateModal() {
     try {
-      // Busca o HTML da página de criação
-      const response = await fetch("create.php");
-
-      if (!response.ok) {
-        throw new Error("Falha ao carregar o formulário de criação.");
-      }
+      // Carrega o conteúdo do modal a partir do create.php
+      const response = await fetch("create.php"); 
+      if (!response.ok) throw new Error("Falha ao carregar o formulário de criação.");
 
       const modalHTML = await response.text();
       modalContainer.innerHTML = modalHTML;
 
-      // Mostra o modal com animação (CSS)
+      // Mostra o modal
       modalBackdrop.classList.add("show");
       modalContainer.classList.add("show");
 
-      // Adiciona os "escutadores" aos botões DENTRO do modal
       attachModalListeners();
-
     } catch (error) {
       console.error(error);
       modalContainer.innerHTML = "<p>Erro ao carregar. Tente novamente.</p>";
     }
   }
 
-  /**
-   * Adiciona os listeners aos botões "Cancelar", "Salvar", "Add Item", etc.
-   */
   function attachModalListeners() {
     const form = modalContainer.querySelector(".todo-container");
     if (!form) return;
 
-    // Listener para o botão "Salvar Lista"
+    // Listeners para os botões do formulário
     form.querySelector(".save-list-btn").addEventListener("click", saveNewList);
-
-    // Listener para o botão "Cancelar"
     form.querySelector(".cancel-btn").addEventListener("click", closeModal);
 
-    // Listener para a tecla "Enter" no input de item
+    // Listener para adicionar tarefa temporária ao pressionar ENTER
     form.querySelector(".new-item-input").addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
-        e.preventDefault(); // Impede o envio de formulário
+        e.preventDefault();
         addTemporaryTask();
       }
     });
   }
 
-  /**
-   * Fecha o modal e limpa seu conteúdo.
-   */
   function closeModal() {
     modalBackdrop.classList.remove("show");
     modalContainer.classList.remove("show");
-    modalContainer.innerHTML = ""; // Limpa o HTML para a próxima abertura
+    modalContainer.innerHTML = "";
   }
 
-  /**
-   * Adiciona a tarefa apenas na interface (temporariamente)
-   * antes de salvar no banco.
-   */
   function addTemporaryTask() {
     const input = modalContainer.querySelector(".new-item-input");
     const listArea = modalContainer.querySelector(".todo-list-area");
@@ -153,14 +109,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (description === "") return;
 
     const emptyMsg = listArea.querySelector(".empty-list-message");
-
-    // Remove "Sua lista está vazia"
     if (emptyMsg) emptyMsg.remove();
 
-    // Cria o elemento da nova tarefa (temporário)
     const taskElement = document.createElement("div");
-    taskElement.className = "temp-task-item"; // Classe para fácil leitura/remoção
-    taskElement.textContent = description;
+    taskElement.className = "temp-task-item";
+    taskElement.textContent = description; // Conteúdo da tarefa
 
     listArea.appendChild(taskElement);
 
@@ -168,22 +121,18 @@ document.addEventListener("DOMContentLoaded", () => {
     input.focus();
   }
 
-  /**
-   * Função PRINCIPAL: Salva a lista e, em seguida,
-   * salva todas as tarefas associadas.
-   */
   async function saveNewList() {
     const titleInput = modalContainer.querySelector(".todo-title-input");
     const title = titleInput.value.trim();
 
     if (title === "") {
-      alert("Por favor, dê um título à sua lista.");
+      console.warn("Título da lista não informado.");
       titleInput.focus();
       return;
     }
 
     try {
-      // --- Passo 1: Salvar a Lista ---
+      // 1. Cria a LISTA (requisição POST para o actions.php)
       const listFormData = new FormData();
       listFormData.append("title", title);
       listFormData.append("action", "list_create");
@@ -194,124 +143,97 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const listResult = await listResponse.json();
-
-      if (!listResult.success || !listResult.id) {
-        throw new Error(listResult.error || "Falha ao criar a lista.");
-      }
+      if (!listResult.success || !listResult.id) throw new Error(listResult.error || "Falha ao criar a lista.");
 
       const newListId = listResult.id;
 
-      // --- Passo 2: Salvar as Tarefas ---
+      // 2. Cria as TAREFAS associadas à nova lista
       const taskElements = modalContainer.querySelectorAll(".temp-task-item");
-
       for (const taskElement of taskElements) {
         const fd = new FormData();
         fd.append("action", "task_create");
         fd.append("list_id", newListId);
         fd.append("description", taskElement.textContent);
 
-        await fetch("../actions.php", {
-          method: "POST",
-          body: fd,
-        });
+        await fetch("../actions.php", { method: "POST", body: fd });
       }
 
-      // --- Passo 3: Fechar e Atualizar ---
+      // 3. Fecha o modal e recarrega as listas para mostrar o novo card
       closeModal();
       loadLists();
-
     } catch (error) {
-      console.error(error);
-      alert("Erro ao salvar a lista: " + error.message);
+      console.error("Erro ao salvar a lista:", error);
     }
   }
 
+  // --- DELETE LIST (Remove o card do DOM após exclusão no servidor) ---
   async function deleteList(listId) {
-  if (!confirm("Tem certeza que deseja excluir esta lista e todas as suas tarefas?")) {
-    return;
-  }
+    if (!confirm("Tem certeza que deseja excluir esta lista e todas as suas tarefas?")) return;
 
-  try {
-    const fd = new FormData();
-    fd.append("action", "list_delete");
-    // O backend espera o ID
-    fd.append("id", listId); 
+    try {
+      const fd = new FormData();
+      fd.append("action", "list_delete");
+      fd.append("id", listId);
 
-    // O caminho CORRETO é ../actions.php
-    const response = await fetch("../actions.php", {
-      method: "POST",
-      body: fd,
-    });
+      const response = await fetch("../actions.php", { method: "POST", body: fd });
+      const result = await response.json();
 
-    const result = await response.json();
-
-    if (!response.ok || result.error) {
-      alert(result.error || "Erro ao deletar lista.");
-      return;
+      if (response.ok && !result.error) {
+        // Encontra o card pelo seu atributo data-list-id e o remove do DOM
+        const card = document.querySelector(`.card[data-list-id="${listId}"]`);
+        if (card) card.remove();
+      } else {
+        console.error("Erro ao deletar lista:", result.error || "Erro desconhecido");
+      }
+    } catch (err) {
+      console.error("Erro de comunicação ao tentar deletar a lista:", err);
     }
-
-    // Atualiza a interface
-    loadLists();
-  } catch (err) {
-    console.error("Erro no deleteList:", err);
-    alert("Erro de comunicação ao tentar deletar a lista.");
   }
-}
 
   // --- 5. Funções Auxiliares ---
-
-  // No Public/Assets/JS/home.js:
-
-/**
- * Cria o HTML para um card na home.
- * @param {object} list - O objeto da lista (agora inclui list.tasks)
- * @returns {HTMLElement} - Elemento do card
- */
-function createListCard(list) {
+  function createListCard(list) {
     const colors = ["yellow", "blue", "pink", "green", "purple"];
-    const color = colors[list.id % colors.length];
+    // Define a cor do card com base no ID da lista para manter a consistência
+    const color = colors[list.id % colors.length]; 
 
     const card = document.createElement("div");
     card.className = `card ${color}`;
-    card.dataset.listId = list.id;
+    // Atributo essencial para a função deleteList encontrar e remover o card
+    card.dataset.listId = list.id; 
 
     const titleEl = document.createElement("h2");
     titleEl.textContent = list.title;
 
-    // --- Container para as Tarefas (Substitui "(anotações)") ---
     const tasksEl = document.createElement("p");
     tasksEl.className = "card-task-preview";
-    
-    // Verifica se a lista tem tarefas e exibe o resumo
+
+    // Mostra a primeira tarefa e conta as restantes
     if (list.tasks && list.tasks.length > 0) {
-        // Exibe o conteúdo da primeira tarefa
-        tasksEl.textContent = list.tasks[0].content;
-        
-        // Se houver mais, adiciona o contador
-        if (list.tasks.length > 1) {
-            tasksEl.textContent += ` (+${list.tasks.length - 1} mais...)`;
-        }
+      tasksEl.textContent = list.tasks[0].content;
+      if (list.tasks.length > 1) {
+        tasksEl.textContent += ` (+${list.tasks.length - 1} mais...)`;
+      }
     } else {
-        tasksEl.textContent = "(Nenhuma tarefa)";
+      tasksEl.textContent = "(Nenhuma tarefa)";
     }
 
-
-    // --- Botão de deletar ---
+    // Botão de Excluir
     const deleteBtn = document.createElement("button");
     deleteBtn.className = "delete-btn";
     deleteBtn.innerHTML = "🗑️";
     deleteBtn.title = "Excluir lista";
     deleteBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // Impede abrir modal
-        deleteList(list.id);
+      e.stopPropagation(); // Impede que o clique no botão ative outro evento (como abrir modal de edição)
+      deleteList(list.id);
     });
 
     card.appendChild(deleteBtn);
     card.appendChild(titleEl);
-    card.appendChild(tasksEl); // Adiciona o resumo das tarefas
+    card.appendChild(tasksEl);
 
     return card;
-}
+  }
+
   // Inicia a aplicação
   initialize();
 });

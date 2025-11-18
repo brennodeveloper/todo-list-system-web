@@ -51,8 +51,8 @@ if (isset($_GET['success']) && $_GET['success'] === 'registered') {
                 <div class="alert-success"><?php echo htmlspecialchars($success_message); ?></div>
             <?php endif; ?>
 
-            <h1>Create your account</h1>
-            <p>Fill in the details below to get started</p>
+            <h1>Crie sua conta</h1>
+            <p></p>
 
             <form action="../actions.php" method="POST" class="form-login">
                 <input type="hidden" name="action_type" value="register">
