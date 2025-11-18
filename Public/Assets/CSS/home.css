@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Rubik", sans-serif;
 }
 
 body {
@@ -98,4 +98,48 @@ body {
 
 .add-card:hover {
     transform: scale(1.05);
+}
+
+/* modal */
+/* O fundo escuro que cobre a página */
+.modal-backdrop {
+    position: fixed; /* Cobre a tela inteira */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Efeito de "vidro fosco" */
+    z-index: 100;
+    display: none; /* Começa escondido */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* O contêiner que segura o modal no centro */
+.modal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centraliza perfeitamente */
+    z-index: 101;
+    display: none; /* Começa escondido */
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Classes que o JS vai adicionar para mostrar o modal */
+.modal-backdrop.show,
+.modal-container.show {
+    display: block;
+    opacity: 1;
+}
+
+.card .delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
 }

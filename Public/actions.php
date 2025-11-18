@@ -1,38 +1,90 @@
 <?php
-// Arquivo: todo-list-system-web/public/actions.php
+// Arquivo: Public/actions.php
 
-// Inicia a sessão (necessário para os scripts de autenticação)
+// Inicia a sessão se ainda não iniciou
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Inclui o arquivo de conexão. O caminho está correto pois estamos na pasta public/
-require_once __DIR__ . '/../config/database.php';
+// Inclui a conexão com o banco
+require_once dirname(__DIR__) . '/config/database.php';
 
-// 1. Garante que o método é POST
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: pages/login.php"); 
-    exit;
-}
+// --- LÓGICA DE ROTEAMENTO INTELIGENTE ---
 
-// 2. Verifica qual ação foi solicitada pelo formulário
-// O valor vem do campo <input type="hidden" name="action_type" ...>
-$action = filter_input(INPUT_POST, 'action_type', FILTER_SANITIZE_STRING);
+// 1. Tenta pegar 'action_type' (Usado pelos formulários de Login/Register)
+$actionType = $_POST['action_type'] ?? '';
+
+// 2. Tenta pegar 'action' (Usado pelo nosso JavaScript do Home)
+$actionAjax = $_REQUEST['action'] ?? '';
+
+// 3. Define qual ação usar (dá prioridade ao action_type)
+$action = $actionType !== '' ? $actionType : $actionAjax;
+
+// Caminho correto para a pasta SRC (subindo apenas 1 nível)
+$srcPath = dirname(__DIR__) . '/src/actions';
 
 switch ($action) {
+    // =================================================
+    // ÁREA DE AUTENTICAÇÃO (Login/Register)
+    // =================================================
+
     case 'login':
-        // Inclui o script de login seguro (agora o caminho é relativo a public/)
-        require_once __DIR__ . '/../src/actions/auth_login.php';
+        require $srcPath . '/auth_login.php';
         break;
 
     case 'register':
-        // Inclui o script de registro seguro (agora o caminho é relativo a public/)
-        require_once __DIR__ . '/../src/actions/auth_register.php';
+        require $srcPath . '/auth_register.php';
         break;
 
+    // =================================================
+    // ÁREA DO SISTEMA (Listas e Tarefas - AJAX)
+    // =================================================
+
+    // --- Listas ---
+    case 'list_create':
+        require $srcPath . '/list_create.php';
+        break;
+
+    case 'list_get':
+        require $srcPath . '/list_get.php';
+        break;
+
+    case 'list_delete':
+        require $srcPath . '/list_delete.php';
+        break;
+
+    // --- Tarefas ---
+    case 'task_create':
+        require $srcPath . '/task_create.php';
+        break;
+
+    case 'task_delete':
+        require $srcPath . '/task_delete.php';
+        break;
+
+    case 'task_update':
+        require $srcPath . '/task_update.php';
+        break;
+
+    case 'task_get':
+        require $srcPath . '/task_get.php';
+        break;
+
+    // =================================================
+    // PADRÃO (ERRO)
+    // =================================================
+
     default:
-        // Ação desconhecida - Redireciona de volta
-        header("Location: pages/login.php?error=invalid_action");
+        // Se veio pelo Ajax (JavaScript), retorna JSON de erro
+        if ($actionAjax !== '') {
+            header('Content-Type: application/json');
+            http_response_code(400);
+            echo json_encode(['error' => 'Ação inválida ou não encontrada.']);
+        } 
+        // Se veio pelo navegador (acesso direto ou erro de login)
+        else {
+            header("Location: login.php?error=invalid_action");
+        }
         exit;
 }
 ?>
