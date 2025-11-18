@@ -48,6 +48,5 @@ if (!isset($_SESSION['user_id'])) {
     </footer>
 </div>
 
-<script src="../Assets/JS/home.js"></script>
 </body>
 </html>
